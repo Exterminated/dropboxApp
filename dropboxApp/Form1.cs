@@ -1,20 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace dropboxApp
 {
-    public partial class Form1 : Form
+    public partial class Auth : Form
     {
-        public Form1()
+        public Auth()
         {
             InitializeComponent();
+        }
+
+        private void connect_button_Click(object sender, EventArgs e)
+        {
+            MainWindow mw = new MainWindow();
+            if (userCheck(this.login_textBox.ToString(), this.password_textBox.ToString())) mw.Show();
+        }
+
+        private bool userCheck(string login, string password) {
+            if (login.Contains(@"devjatkin.fjodr@gmail.com") && password.Contains(@"agent1815")) return true;
+            else { MessageBox.Show("Wrong login or password"); return false; }
         }
     }
 }
