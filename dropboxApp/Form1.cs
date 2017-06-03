@@ -8,12 +8,14 @@ namespace dropboxApp
         public Auth()
         {
             InitializeComponent();
+            login_textBox.Text = @"devjatkin.fjodr@gmail.com";
+            password_textBox.Text = @"agent1815";
         }
 
         private void connect_button_Click(object sender, EventArgs e)
         {
             MainWindow mw = new MainWindow();
-            if (userCheck(this.login_textBox.ToString(), this.password_textBox.ToString())) mw.Show();
+            if (userCheck(login_textBox.ToString(), password_textBox.ToString())) { mw.Show(); }
         }
 
         private bool userCheck(string login, string password) {

@@ -95,5 +95,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="icons\cloud-computing-2.png" />
+    <Content Include="icons\cloud-computing.png" />
+    <Content Include="icons\cloud.png" />
+    <Content Include="icons\file.png" />
+    <Content Include="icons\folder-5.png" />
+    <Content Include="icons\id-card-1.png" />
+    <Content Include="icons\id-card-5.png" />
+    <Content Include="icons\users-1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
