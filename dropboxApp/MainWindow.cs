@@ -97,7 +97,8 @@ namespace dropboxApp
             
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                dbx.Upload(dropbox_treeView.SelectedNode.Text, openFileDialog.FileName.ToString());
+                //dbx.Upload(dropbox_treeView.SelectedNode.Text, openFileDialog.FileName.ToString());
+                dbx.Upload("dropboxAPP", openFileDialog.FileName.ToString());
             }
             statusBar.Value = 100;
         }

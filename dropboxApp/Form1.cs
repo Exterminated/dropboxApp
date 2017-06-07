@@ -12,6 +12,14 @@ namespace dropboxApp
             password_textBox.Text = @"agent1815";
         }
 
+        internal Dropbox Dropbox
+        {
+            get => default(Dropbox);
+            set
+            {
+            }
+        }
+
         private void connect_button_Click(object sender, EventArgs e)
         {
             MainWindow mw = new MainWindow();
