@@ -21,9 +21,9 @@ namespace dropboxApp
             task.Wait();
             return task.Result;
         }
-        public List<string> All_Files() {
+        public List<string> All_Files(string root) {
             List<string> all_cloud_items = new List<string>();
-            var task = Task.Run(Files);
+            var task = Task.Run(()=>Files(root));
             task.Wait();
             var downloaded_files = task.Result;
             foreach (var item in downloaded_files.Entries) {
@@ -34,8 +34,10 @@ namespace dropboxApp
             }
             return all_cloud_items;
         }
+        
         public Stream Download(string folder_d, string file_d) {
-            var task = Task.Run(()=>Download_Task(folder_d, file_d));
+            string file_name = Path.GetFileName(file_d);
+            var task = Task.Run(()=>Download_Task(folder_d, file_name));
             task.Wait();
             return task.Result;
         }
@@ -55,9 +57,9 @@ namespace dropboxApp
             }
             return result;
         }
-        private async Task <ListFolderResult> Files(){
+        private async Task <ListFolderResult> Files(string root){
             DropboxClient dbx = new DropboxClient(_TOKEN);            
-            return await dbx.Files.ListFolderAsync(string.Empty);
+            return await dbx.Files.ListFolderAsync(root);
         }
         private async Task <Stream> Download_Task(string folder, string file)
         {

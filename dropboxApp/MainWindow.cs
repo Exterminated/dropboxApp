@@ -10,6 +10,7 @@ namespace dropboxApp
     {
         private Dropbox dbx = new Dropbox();
         private List<string> files = new List<string>();
+        private string lastFile="text.txt";
 
         public MainWindow()
         {
@@ -36,7 +37,7 @@ namespace dropboxApp
             statusBar.Value = 15;
             info_label.Text = dbx.Connect();
             statusBar.Value = 50;
-            files = dbx.All_Files();
+            files = dbx.All_Files(string.Empty);
             statusBar.Value = 75;
             SetImages();
             //foreach (var item in files) dropbox_treeView.Nodes.Add(item);
@@ -48,8 +49,8 @@ namespace dropboxApp
         private void SetImages() {
             var lst = new ImageList();
 
-            lst.Images.Add(Image.FromFile(@"C:\Users\devja\documents\visual studio 2017\Projects\dropboxApp\dropboxApp\icons\folder-5.png"));
-            lst.Images.Add(Image.FromFile(@"C:\Users\devja\documents\visual studio 2017\Projects\dropboxApp\dropboxApp\icons\file.png"));
+            lst.Images.Add(Image.FromFile(@"C:\Users\Александра\Documents\GitHub\dropboxapp\dropboxApp\icons\folder-5.png"));
+            lst.Images.Add(Image.FromFile(@"C:\Users\Александра\Documents\GitHub\dropboxapp\dropboxApp\icons\file.png"));
 
             dropbox_treeView.ImageList = lst;
 
@@ -68,10 +69,9 @@ namespace dropboxApp
 
         private void Download_button_Click(object sender, EventArgs e)
         {
-            statusBar.Value = 5;
+            statusBar.Value = 25;
             //from dropbox
-            Stream file_cloud;
-            file_cloud = dbx.Download("dropboxAPP","text.txt");
+            Stream file_cloud = dbx.Download("dropboxAPP",lastFile);
 
             try
             {
@@ -80,7 +80,8 @@ namespace dropboxApp
 
                 statusBar.Value = 75;
 
-                FileStream fileStream = File.Create(folderBrowserDialog.SelectedPath.ToString() + @"\" + "text.txt");
+                FileStream fileStream = File.Create(folderBrowserDialog.SelectedPath.ToString() + @"\" + Path.GetFileName(lastFile));
+                
                 file_cloud.CopyTo(fileStream);
                 fileStream.Close();
             }
@@ -93,15 +94,20 @@ namespace dropboxApp
 
         private void Upload_button_Click(object sender, EventArgs e)
         {
-            statusBar.Value = 0;
+            statusBar.Value = 25;
             
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                lastFile = openFileDialog.FileName.ToString();
                 //dbx.Upload(dropbox_treeView.SelectedNode.Text, openFileDialog.FileName.ToString());
-                dbx.Upload("dropboxAPP", openFileDialog.FileName.ToString());
+                dbx.Upload("dropboxAPP", lastFile);
             }
             statusBar.Value = 100;
         }
-        
+
+        private void Dropbox_treeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            List<string> sub_files = dbx.All_Files(dropbox_treeView.SelectedNode.Name);
+        }
     }
 }
